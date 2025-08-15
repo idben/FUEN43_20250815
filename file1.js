@@ -1,7 +1,7 @@
-const navLinks = document.querySelectorAll(".nav2 .nav-link");
-const userH2 = document.querySelector(".navcontent h2");
-const userH3 = document.querySelector(".navcontent h3");
-const userImg = document.querySelector(".navcontent img");
+var navLinks = document.querySelectorAll(".nav2 .nav-link");
+var userH2 = document.querySelector(".navcontent h2");
+var userH3 = document.querySelector(".navcontent h3");
+var userImg = document.querySelector(".navcontent img");
 
 navLinks.forEach(function (navLink, index) {
     navLink.addEventListener("click", function () {

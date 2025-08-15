@@ -131,10 +131,13 @@
         function loadContent() {
             fetch(path).then(function (response) {
                 // server 的回應
+                if (!response.ok) {
+                    return new Error(response.statusText);
+                }
                 return response.text();
+                // return response.json();
             }).then(function (result) {
                 // 上一個 then 的傳出結果
-                console.log(result);
                 content.innerHTML = result;
             }).catch(function (error) {
                 // 補獲錯誤

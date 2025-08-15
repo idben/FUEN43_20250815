@@ -131,7 +131,8 @@
 
         window.addEventListener("hashchange", function () {
             path = window.location.hash.replace("#", "");
-            loadContent(path);
+            loadContent(path + ".html");
+            loadContent(path + ".js");
         });
 
         function loadContent(file) {

@@ -19,7 +19,7 @@
 </head>
 
 <body class="d-flex">
-    <nav class="bg-secondary-subtle collapse collapse-horizontal show" id="menu">
+    <nav class="bg-secondary-subtle collapse collapse-horizontal" id="menu">
         <div class="w250px p-2">
             <div class="d-flex">
                 <button type="button" class="btn-close ms-auto" aria-label="Close" data-bs-toggle="collapse"
@@ -115,7 +115,7 @@
             </div>
         </div>
     </nav>
-    <main class="flex-fill bg-primary-subtle">
+    <main class="flex-fill">
         <button class="btn btn-primary rounded-0 rounded-end mt-2" data-bs-toggle="collapse"
             data-bs-target="#menu">開合</button>
         <div class="content p-3"></div>
@@ -125,20 +125,36 @@
         crossorigin="anonymous"></script>
     <script>
         const content = document.querySelector(".content");
-        const path = window.location.hash.replace("#", "") + ".html";
-        loadContent();
+        let path = window.location.hash.replace("#", "");
+        loadContent(path + ".html");
+        loadContent(path + ".js");
 
-        function loadContent() {
-            fetch(path).then(function (response) {
+        window.addEventListener("hashchange", function () {
+            path = window.location.hash.replace("#", "");
+            loadContent(path);
+        });
+
+        function loadContent(file) {
+            fetch(file).then(function (response) {
                 // server 的回應
                 if (!response.ok) {
-                    return new Error(response.statusText);
+                    throw new Error(response.statusText);
                 }
                 return response.text();
                 // return response.json();
             }).then(function (result) {
                 // 上一個 then 的傳出結果
-                content.innerHTML = result;
+                if (file.includes(".js")) {
+                    // 在記憶體中產生 <scirpt>
+                    const node = document.createElement("script");
+                    // 把載入的 file1.js 的內容放進產生的 <scirpt> 中
+                    node.textContent = result;
+                    // 把產生的 <scirpt> 放到 .content 這個 div 的最後
+                    content.append(node);
+                } else {
+                    content.innerHTML = result;
+                }
+
             }).catch(function (error) {
                 // 補獲錯誤
                 console.log(error);

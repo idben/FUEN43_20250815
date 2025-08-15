@@ -4,9 +4,6 @@ const userH3 = document.querySelector(".navcontent h3");
 const userImg = document.querySelector(".navcontent img");
 
 navLinks.forEach(function (navLink, index) {
-    console.log(navLink);
-    console.log(index);
-
     navLink.addEventListener("click", function () {
         // document.querySelector(".nav2 .active")?.classList.remove("active");
         if (document.querySelector(".nav2 .active")) {
@@ -16,6 +13,8 @@ navLinks.forEach(function (navLink, index) {
         loadUser();
     });
 });
+
+navLinks[1].click();
 
 
 function loadUser() {

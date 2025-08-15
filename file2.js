@@ -1,4 +1,7 @@
 var tbody = document.querySelector("table tbody");
+var pagination = document.querySelector(".pagination");
+var numPerPage = 4;
+var totalPage;
 
 loadData();
 
@@ -9,8 +12,16 @@ async function loadData() {
         if (!response.ok) throw new Error(response.statusText);
         const result = await response.json();
         console.log(result);
-        let contentHTML = "";
+        totalPage = Math.round(result.length / numPerPage);
+        console.log(totalPage);
+        for (let i = 0; i < totalPage; i++) {
+            const node = document.createElement("li");
+            node.classList.add("page-item");
+            node.innerHTML = `<a class="page-link" href="#">${i + 1}</a>`;
+            pagination.append(node);
+        }
 
+        let contentHTML = "";
         result.forEach((value, index) => {
             console.log(value["地區"]);
             contentHTML += `<tr>
